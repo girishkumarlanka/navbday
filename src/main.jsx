@@ -24,30 +24,17 @@ function App(){
  const [wishGranted, setWishGranted] = useState(false);
 
 
- useEffect(()=>{
-   const audio=audioRef.current;
-   if(!audio) return;
-   audio.loop=true;
-   audio.volume=0.55;
- },[]);
+
 
  useEffect(()=>{
    if(page===6) setCelebrate(true);
  },[page]);
 
- const startMusic=async()=>{
-   const audio=audioRef.current;
-   if(!audio) return;
-   try{
-    
-     setMusicPlaying(true);
-   }catch(e){
-     // Browser may block playback until a direct user interaction.
-     setMusicPlaying(false);
-   }
- };
+
 useEffect(() => {
   const startMusic = () => {
+   audio.loop=true;
+   audio.volume=0.55;
     if (audioRef.current) {
       audioRef.current.play().catch(() => {});
     }
