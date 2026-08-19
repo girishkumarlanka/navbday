@@ -22,15 +22,6 @@ function App(){
  const [musicPlaying,setMusicPlaying]=useState(false);
  const audioRef=React.useRef(null);
  const [wishGranted, setWishGranted] = useState(false);
-
-
-
-
- useEffect(()=>{
-   if(page===6) setCelebrate(true);
- },[page]);
-
-
 useEffect(() => {
   const audio = audioRef.current;
 
@@ -61,6 +52,30 @@ useEffect(() => {
     document.removeEventListener("touchstart", startOnInteraction);
   };
 }, []);
+
+ useEffect(()=>{
+   const audio=audioRef.current;
+   if(!audio) return;
+   audio.loop=true;
+   audio.volume=0.55;
+ },[]);
+
+ useEffect(()=>{
+   if(page===6) setCelebrate(true);
+ },[page]);
+
+ const startMusic=async()=>{
+   const audio=audioRef.current;
+   if(!audio) return;
+   try{
+    
+     setMusicPlaying(true);
+   }catch(e){
+     // Browser may block playback until a direct user interaction.
+     setMusicPlaying(false);
+   }
+ };
+
  
 
  const next=async()=>{
@@ -74,8 +89,9 @@ useEffect(() => {
 <audio
   ref={audioRef}
   src={`${import.meta.env.BASE_URL}music/navya-birthday.mp3`}
-  preload="auto"
+  autoPlay
   loop
+  preload="auto"
 />  <FloatingHearts/>{page===6&&<SparkleField/>}
   <div className="ambient a1"/><div className="ambient a2"/>
 
