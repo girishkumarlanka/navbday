@@ -57,8 +57,12 @@ function App(){
  const current=pages[page];
 
  return <main className={`app page-${current.k}`}>
-  <audio ref={audioRef} src="/music/navya-birthday.mp3" preload="auto" autoPlay loop />
-  <FloatingHearts/>{page===6&&<SparkleField/>}
+<audio
+  ref={audioRef}
+  src={`${import.meta.env.BASE_URL}music/navya-birthday.mp3`}
+  preload="auto"
+  loop
+/>  <FloatingHearts/>{page===6&&<SparkleField/>}
   <div className="ambient a1"/><div className="ambient a2"/>
 
   <header>
