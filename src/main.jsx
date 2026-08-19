@@ -46,7 +46,21 @@ function App(){
      setMusicPlaying(false);
    }
  };
+useEffect(() => {
+  const startMusic = () => {
+    if (audioRef.current) {
+      audioRef.current.play().catch(() => {});
+    }
+  };
 
+  window.addEventListener("click", startMusic, { once: true });
+  window.addEventListener("touchstart", startMusic, { once: true });
+
+  return () => {
+    window.removeEventListener("click", startMusic);
+    window.removeEventListener("touchstart", startMusic);
+  };
+}, []);
  
 
  const next=async()=>{
