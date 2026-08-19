@@ -32,20 +32,33 @@ function App(){
 
 
 useEffect(() => {
-  const startMusic = () => {
-   audio.loop=true;
-   audio.volume=0.55;
-    if (audioRef.current) {
-      audioRef.current.play().catch(() => {});
+  const audio = audioRef.current;
+
+  if (!audio) return;
+
+  audio.volume = 1;
+
+  const playMusic = async () => {
+    try {
+      await audio.play();
+      console.log("🎵 Music started");
+    } catch (error) {
+      console.log("🔇 Autoplay blocked by browser");
     }
   };
 
-  window.addEventListener("click", startMusic, { once: true });
-  window.addEventListener("touchstart", startMusic, { once: true });
+  playMusic();
+
+  const startOnInteraction = () => {
+    playMusic();
+  };
+
+  document.addEventListener("click", startOnInteraction, { once: true });
+  document.addEventListener("touchstart", startOnInteraction, { once: true });
 
   return () => {
-    window.removeEventListener("click", startMusic);
-    window.removeEventListener("touchstart", startMusic);
+    document.removeEventListener("click", startOnInteraction);
+    document.removeEventListener("touchstart", startOnInteraction);
   };
 }, []);
  
